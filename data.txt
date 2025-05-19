@@ -1,0 +1,1 @@
+"@nomiclabs/hardhat-waffle": "^2.0.6",
