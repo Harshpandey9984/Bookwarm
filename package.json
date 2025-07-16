@@ -18,7 +18,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "vercel-build": "npm run build"
   },
   "eslintConfig": {
     "extends": [
@@ -39,8 +40,11 @@
     ]
   },
   "devDependencies": {
-    "@nomicfoundation/hardhat-ethers": "^3.0.7",
-    "@nomicfoundation/hardhat-toolbox": "^2.0.0",
+    "@nomicfoundation/hardhat-ethers": "^2.0.0",
+    "@nomicfoundation/hardhat-toolbox": "^1.0.0",
     "hardhat": "^2.12.2"
+  },
+  "overrides": {
+    "ethers": "^5.7.2"
   }
 }
