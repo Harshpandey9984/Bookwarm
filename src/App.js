@@ -27,19 +27,20 @@ function App() {
   }
 
   const loadBlockchainData = async () => {
-    //connect to blockchain
-    const provider = new ethers.providers.JsonRpcProvider('http://127.0.0.1:8545');
-    setProvider(provider);
-    const network = await provider.getNetwork()
-    console.log(network)
+    try {
+      //connect to blockchain
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      setProvider(provider);
+      const network = await provider.getNetwork()
+      console.log(network)
 
-    //connect to contract
-    const dappazon = new ethers.Contract (
-      '0x5FbDB2315678afecb367f032d93F642f64180aa3',
-      ABI,
-      provider
-    )
-    setDappazon(dappazon)
+      //connect to contract
+      const dappazon = new ethers.Contract (
+        config[network.chainId].bookwarm.address,
+        ABI,
+        provider
+      )
+      setDappazon(dappazon)
     
     const items = []
 
@@ -59,14 +60,16 @@ function App() {
     const marvelItems = items.filter((item) => item.category === 'marvel');
     setMarvel(marvelItems);
 
-    const mythologyItems = items.filter((item) => item.category === 'mythalogy');
+    const mythologyItems = items.filter((item) => item.category === 'mythology');
     setMythology(mythologyItems);
     
     const hindiItems = items.filter((item) => item.category === 'hindi');
-    setHindi(hindiItems);
-
+    setHindi(hindiItems);    
     const goosebumpsItems = items.filter((item) => item.category === 'goosebumps');
     setGoosebumps(goosebumpsItems);
+    } catch (error) {
+      console.error('Error loading blockchain data:', error);
+    }
   }
 
   useEffect(() => {

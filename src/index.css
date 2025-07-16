@@ -400,7 +400,7 @@ nav {
   }
 }
 footer {
-  background-color: #333;
+  background-color: #808080;
   color: #fff;
   padding: 40px 0;
 }
@@ -427,6 +427,37 @@ footer ul li {
 footer ul li a {
   color: #fff;
   text-decoration: none;
+}
+
+/* Contact info styling */
+.contact-info {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.contact-info h4 {
+  color: #fff;
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+.contact-info p {
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+.contact-info a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 10px;
+}
+
+.contact-info a:hover {
+  color: #ffd700;
+}
+
+.contact-info i {
+  margin-right: 8px;
 }
 
 .social-icons li {

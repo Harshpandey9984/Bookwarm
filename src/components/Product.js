@@ -34,14 +34,51 @@ const Product = ({ item, provider, account, dappazon, togglePop }) => {
         // Get the provider and signer from MetaMask
         const provider = new ethers.providers.Web3Provider(window.ethereum);
         const signer = provider.getSigner();
+        
+        // Get the current network and check if it's localhost
+        const network = await provider.getNetwork();
+        console.log("Network:", network);
+        
+        if (network.chainId !== 31337) {
+            alert("Please switch to the Localhost 8545 network in MetaMask");
+            return;
+        }
 
-        // Set the gas limit and other transaction overrides
+        // Get current account balance
+        const balance = await signer.getBalance();
+        console.log("Account balance:", ethers.utils.formatEther(balance), "ETH");
+        
+        // Check if user has enough balance (item cost + gas fees)
+        const itemCost = ethers.BigNumber.from(item.cost);
+        const estimatedGasFees = ethers.utils.parseEther("0.01"); // Estimate ~0.01 ETH for gas
+        const totalNeeded = itemCost.add(estimatedGasFees);
+        
+        if (balance.lt(totalNeeded)) {
+            alert(`Insufficient balance. You need at least ${ethers.utils.formatEther(totalNeeded)} ETH (${ethers.utils.formatEther(itemCost)} for item + ~0.01 for gas)`);
+            return;
+        }
+
+        // Estimate gas for the transaction
+        let gasEstimate;
+        try {
+            gasEstimate = await dappazon.connect(signer).estimateGas.buy(item.id, { value: item.cost });
+            console.log("Gas estimate:", gasEstimate.toString());
+        } catch (estimateError) {
+            console.error("Gas estimation failed:", estimateError);
+            gasEstimate = ethers.BigNumber.from("300000"); // Fallback gas limit
+        }
+
+        // Set transaction overrides with reasonable gas limit
         const overrides = {
-            gasLimit: ethers.BigNumber.from("5000000"), // Set a sufficient gas limit
+            value: item.cost,
+            gasLimit: gasEstimate.mul(110).div(100), // Add 10% buffer to gas estimate
+            gasPrice: ethers.utils.parseUnits("20", "gwei") // Set reasonable gas price for localhost
         };
 
+        console.log("Transaction overrides:", overrides);
+
         // Buy item - this triggers MetaMask to prompt the user for confirmation
-        let transaction = await dappazon.connect(signer).buy(item.id, { value: item.cost, ...overrides });
+        let transaction = await dappazon.connect(signer).buy(item.id, overrides);
         console.log("Transaction initiated:", transaction);
 
         // Wait for the transaction to be mined
@@ -49,12 +86,22 @@ const Product = ({ item, provider, account, dappazon, togglePop }) => {
 
         console.log("Transaction confirmed");
         setHasBought(true);
+        alert("Purchase successful!");
+        
     } catch (error) {
         console.error('Error buying item:', error);
 
-        // Handle specific errors, for example, if the user rejects the transaction
+        // Handle specific errors
         if (error.code === 4001) {
             alert("Transaction rejected by the user.");
+        } else if (error.code === -32603) {
+            alert("Transaction failed. Please check your balance and try again.");
+        } else if (error.message.includes("insufficient funds")) {
+            alert("Insufficient funds. Please ensure you have enough ETH for the purchase and gas fees.");
+        } else if (error.message.includes("Item is out of stock")) {
+            alert("Sorry, this item is out of stock.");
+        } else if (error.message.includes("Not enough ether")) {
+            alert("Not enough ETH to buy this item.");
         } else {
             alert(`Transaction failed: ${error.message || 'Unknown error'}`);
         }

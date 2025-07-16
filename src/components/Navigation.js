@@ -5,10 +5,19 @@ const Navigation = ({ account, setAccount }) => {
 
 
     const connectHandler = async () => {
-        const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-        const account = ethers.utils.getAddress(accounts[0]);
-        setAccount(account);
-        console.log(account);
+        try {
+            if (typeof window.ethereum !== 'undefined') {
+                const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+                const account = ethers.utils.getAddress(accounts[0]);
+                setAccount(account);
+                console.log(account);
+            } else {
+                alert('Please install MetaMask to use this application');
+            }
+        } catch (error) {
+            console.error('Error connecting to wallet:', error);
+            alert('Failed to connect to wallet. Please try again.');
+        }
     }
 
     return (
@@ -23,7 +32,7 @@ const Navigation = ({ account, setAccount }) => {
                 </div>
                </a>
 
-            <h2 className='nav_top'>Find your gener and order your Book</h2>
+            <h2 className='nav_top'>Find your genre and order your Book</h2>
 
 
             {

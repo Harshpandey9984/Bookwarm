@@ -6,31 +6,43 @@ const tokens = (n) => {
 }
 
 async function main() {
-  // Setup accounts
-  const [deployer] = await ethers.getSigners()
+  try {
+    // Setup accounts
+    const [deployer] = await ethers.getSigners()
+    console.log("Deploying contracts with the account:", deployer.address);
+    console.log("Account balance:", (await deployer.getBalance()).toString());
 
-  // deploy
-  const Bookwarm = await hre.ethers.getContractFactory("Bookwarm")
-  const bookwarm = await Bookwarm.deploy()
-  await bookwarm.deployed()
+    // deploy
+    const Bookwarm = await hre.ethers.getContractFactory("Bookwarm")
+    const bookwarm = await Bookwarm.deploy()
+    await bookwarm.deployed()
 
-  console.log(`Deployed Contract at: ${bookwarm.address}\n`)
+    console.log(`Deployed Contract at: ${bookwarm.address}\n`)
 
-  //list items
-  for (let i = 0; i < items.length; i++) {
-    const transaction = await bookwarm.connect(deployer).list(
-      items[i].id,
-      items[i].name,
-      items[i].category,
-      items[i].image,
-      tokens(items[i].price),
-      items[i].rating,
-      items[i].stock,
-    )
+    //list items
+    for (let i = 0; i < items.length; i++) {
+      const transaction = await bookwarm.connect(deployer).list(
+        items[i].id,
+        items[i].name,
+        items[i].category,
+        items[i].image,
+        tokens(items[i].price),
+        items[i].rating,
+        items[i].stock,
+      )
 
-    await transaction.wait()
+      await transaction.wait()
 
-    console.log(`Listed item ${items[i].id}: ${items[i].name},${items[i].price},${items[i].stock}`)
+      console.log(`Listed item ${items[i].id}: ${items[i].name}, Price: ${items[i].price} ETH, Stock: ${items[i].stock}`)
+    }
+
+    // Save the contract address to config
+    console.log("\nUpdate your config.json file with the following:")
+    console.log(`Contract Address: ${bookwarm.address}`)
+    
+  } catch (error) {
+    console.error("Deployment failed:", error);
+    process.exitCode = 1;
   }
 }
 
