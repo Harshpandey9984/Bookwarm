@@ -1,14 +1,7 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "build"
-      }
-    }
-  ],
+  "buildCommand": "cp package.production.json package.json && npm install --only=production && npm run build",
+  "outputDirectory": "build",
   "routes": [
     {
       "src": "/(.*)",
