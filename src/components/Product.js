@@ -8,18 +8,35 @@ const Product = ({ item, provider, account, dappazon, togglePop }) => {
   const [hasBought, setHasBought] = useState(false)
 
   const fetchDetails = async () => {
-    const events = await dappazon.queryFilter("Buy")
-    const orders = events.filter(
-      (event) => event.args.buyer === account && event.args.itemId.toString() === item.id.toString()
-    )
+    // Skip fetching details if no dappazon contract (demo mode)
+    if (!dappazon) {
+      return;
+    }
+    
+    try {
+      const events = await dappazon.queryFilter("Buy")
+      const orders = events.filter(
+        (event) => event.args.buyer === account && event.args.itemId.toString() === item.id.toString()
+      )
 
-    if (orders.length === 0) return
+      if (orders.length === 0) return
 
-    const order = await dappazon.orders(account, orders[0].args.orderId)
-    setOrder(order)
+      const order = await dappazon.orders(account, orders[0].args.orderId)
+      setOrder(order)
+    } catch (error) {
+      console.error('Error fetching details:', error);
+    }
   }
   const buyHandler = async () => {
     console.log("Buy button clicked");
+
+    // Check if we're in production/demo mode (no dappazon contract available)
+    if (!dappazon) {
+      // Demo mode - simulate purchase
+      alert(`Demo Purchase Successful! 🎉\n\nBook: ${item.name}\nPrice: ${ethers.utils.formatUnits(item.cost.toString(), 'ether')} ETH\n\nNote: This is a demo. In the full version, connect to a blockchain network to make real purchases.`);
+      setHasBought(true);
+      return;
+    }
 
     try {
         // Check if MetaMask is installed

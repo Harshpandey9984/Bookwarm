@@ -21,6 +21,7 @@ function App() {
   const [goosebumps, setGoosebumps] = useState(null);
   const [toggle, setToggle] = useState(false)
   const [item, setItem] = useState({})
+  const [isDemoMode, setIsDemoMode] = useState(false)
 
   const togglePop = (item) => {
     setItem(item)
@@ -58,13 +59,23 @@ function App() {
       } else {
         // Use fallback data for production deployment or when MetaMask isn't available
         console.log('Using fallback data for deployment...');
-        const items = fallbackItems.items;
+        setIsDemoMode(true);
+        const items = fallbackItems.items.map(item => ({
+          ...item,
+          cost: ethers.utils.parseEther(item.price.toString()), // Convert price to cost in wei
+          id: ethers.BigNumber.from(item.id) // Convert id to BigNumber to match blockchain format
+        }));
         filterAndSetItems(items);
       }
     } catch (error) {
       console.error('Error loading blockchain data, using fallback:', error);
       // Fallback to static data if blockchain connection fails
-      const items = fallbackItems.items;
+      setIsDemoMode(true);
+      const items = fallbackItems.items.map(item => ({
+        ...item,
+        cost: ethers.utils.parseEther(item.price.toString()), // Convert price to cost in wei
+        id: ethers.BigNumber.from(item.id) // Convert id to BigNumber to match blockchain format
+      }));
       filterAndSetItems(items);
     }
   }
@@ -97,6 +108,18 @@ function App() {
   return (
     <div>
       <Navigation account={account} setAccount={setAccount} />
+      {isDemoMode && (
+        <div style={{
+          backgroundColor: '#ffd700',
+          color: '#000',
+          padding: '10px',
+          textAlign: 'center',
+          fontWeight: 'bold',
+          borderBottom: '2px solid #ffb700'
+        }}>
+          📱 DEMO MODE: This is a demonstration of the Bookwarm dApp. Book data is shown for preview. Connect to a local blockchain for full functionality.
+        </div>
+      )}
       <div className='logo__homepage'>
         <img className='logo__home' src={logo} alt="Pharma-Sync"/>
         <h2>Welcome to Bookwarm</h2>
