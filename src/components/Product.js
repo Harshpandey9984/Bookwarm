@@ -59,7 +59,7 @@ const Product = ({ item, provider, account, dappazon, togglePop }) => {
         // Check if we're on a supported network
         if (network.chainId !== 31337) {
             // If not on localhost, offer to switch or show demo
-            const switchToLocal = confirm(
+            const switchToLocal = window.confirm(
                 `You're currently on ${network.name || 'Unknown'} network (Chain ID: ${network.chainId}).\n\n` +
                 `For full functionality, you need to:\n` +
                 `1. Start Hardhat local node (npx hardhat node)\n` +
