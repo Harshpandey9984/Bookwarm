@@ -56,9 +56,39 @@ const Product = ({ item, provider, account, dappazon, togglePop }) => {
         const network = await provider.getNetwork();
         console.log("Network:", network);
         
+        // Check if we're on a supported network
         if (network.chainId !== 31337) {
-            alert("Please switch to the Localhost 8545 network in MetaMask");
-            return;
+            // If not on localhost, offer to switch or show demo
+            const switchToLocal = confirm(
+                `You're currently on ${network.name || 'Unknown'} network (Chain ID: ${network.chainId}).\n\n` +
+                `For full functionality, you need to:\n` +
+                `1. Start Hardhat local node (npx hardhat node)\n` +
+                `2. Add Localhost 8545 network to MetaMask\n` +
+                `3. Switch to Localhost network\n\n` +
+                `Click OK to see demo purchase, or Cancel to learn how to set up local network.`
+            );
+            
+            if (switchToLocal) {
+                // Show demo purchase
+                alert(`Demo Purchase Successful! 🎉\n\nBook: ${item.name}\nPrice: ${ethers.utils.formatUnits(item.cost.toString(), 'ether')} ETH\n\nNote: This was a demo transaction. To make real transactions, set up local blockchain network.`);
+                setHasBought(true);
+                return;
+            } else {
+                // Show setup instructions
+                alert(
+                    `To set up local blockchain:\n\n` +
+                    `1. Open terminal in project folder\n` +
+                    `2. Run: npx hardhat node\n` +
+                    `3. In MetaMask, add network:\n` +
+                    `   - Network Name: Localhost 8545\n` +
+                    `   - RPC URL: http://127.0.0.1:8545\n` +
+                    `   - Chain ID: 31337\n` +
+                    `   - Currency: ETH\n\n` +
+                    `4. Import test account from Hardhat console\n` +
+                    `5. Switch to Localhost network in MetaMask`
+                );
+                return;
+            }
         }
 
         // Get current account balance
