@@ -7,6 +7,7 @@ import ABI from './abis/Bookwarm.json'
 import config from './config.json'
 import logo from './assets/store/main_banner.png';
 import Footer from './components/Footer';
+import fallbackItems from './items.json';
 
 function App() {
   const [account, setAccount] = useState(null);
@@ -28,26 +29,47 @@ function App() {
 
   const loadBlockchainData = async () => {
     try {
-      //connect to blockchain
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      setProvider(provider);
-      const network = await provider.getNetwork()
-      console.log(network)
+      // Check if MetaMask is available and we're not in production deployment
+      if (typeof window.ethereum !== 'undefined' && window.location.hostname === 'localhost') {
+        console.log('Connecting to local blockchain...');
+        //connect to blockchain
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        setProvider(provider);
+        const network = await provider.getNetwork()
+        console.log(network)
 
-      //connect to contract
-      const dappazon = new ethers.Contract (
-        config[network.chainId].bookwarm.address,
-        ABI,
-        provider
-      )
-      setDappazon(dappazon)
-    
-    const items = []
+        //connect to contract
+        const dappazon = new ethers.Contract (
+          config[network.chainId].bookwarm.address,
+          ABI,
+          provider
+        )
+        setDappazon(dappazon)
+      
+        const items = []
 
-    for(let i=0; i<19; i++){
-      const item = await dappazon.items(i)
-      items.push(item)
+        for(let i=0; i<19; i++){
+          const item = await dappazon.items(i)
+          items.push(item)
+        }
+        
+        console.log('Blockchain items loaded:', items)
+        filterAndSetItems(items);
+      } else {
+        // Use fallback data for production deployment or when MetaMask isn't available
+        console.log('Using fallback data for deployment...');
+        const items = fallbackItems.items;
+        filterAndSetItems(items);
+      }
+    } catch (error) {
+      console.error('Error loading blockchain data, using fallback:', error);
+      // Fallback to static data if blockchain connection fails
+      const items = fallbackItems.items;
+      filterAndSetItems(items);
     }
+  }
+
+  const filterAndSetItems = (items) => {
     console.log(items)
     // const top = items.filter((item) => item.category === 'top')
     const bestsellerItems = items.filter((item) => item.category === 'bestseller');
@@ -55,7 +77,6 @@ function App() {
 
     const historyItems = items.filter((item) => item.category === 'history');
     setHistory(historyItems);
-
 
     const marvelItems = items.filter((item) => item.category === 'marvel');
     setMarvel(marvelItems);
@@ -67,9 +88,6 @@ function App() {
     setHindi(hindiItems);    
     const goosebumpsItems = items.filter((item) => item.category === 'goosebumps');
     setGoosebumps(goosebumpsItems);
-    } catch (error) {
-      console.error('Error loading blockchain data:', error);
-    }
   }
 
   useEffect(() => {
