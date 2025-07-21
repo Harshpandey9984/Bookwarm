@@ -22,12 +22,12 @@ const Navigation = ({ account, setAccount }) => {
 
     return (
         <nav>
-
+            <div className="nav__top-row">
                <a className='link__header' href='/'>
-               <div className='nav__brand'>
+               <div className='nav__brand pulse-animation'>
                     <h1>BOOKWARM</h1>
                     <div>
-                        <img src="https://i.ibb.co/W0CW3Pt/logo1.png" alt="Ethereum" />
+                        <img className="float-animation" src="https://i.ibb.co/W0CW3Pt/logo1.png" alt="Ethereum" />
                     </div>
                 </div>
                </a>
@@ -52,6 +52,7 @@ const Navigation = ({ account, setAccount }) => {
                         Connect
                     </button>
             }
+            </div>
 
             <ul className='nav__links'>
                 <li>

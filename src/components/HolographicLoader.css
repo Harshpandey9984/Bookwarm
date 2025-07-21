@@ -1,0 +1,310 @@
+/* Holographic Loader Styles */
+.holographic-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(10, 10, 15, 0.95);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.loader-container {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Central Hologram */
+.hologram-core {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin-bottom: 30px;
+}
+
+.quantum-ring {
+  position: absolute;
+  border: 2px solid;
+  border-radius: 50%;
+  animation: quantumRotate 4s linear infinite;
+}
+
+.quantum-ring-1 {
+  width: 100%;
+  height: 100%;
+  border-color: #00f5ff;
+  animation-duration: 3s;
+  filter: drop-shadow(0 0 10px #00f5ff);
+}
+
+.quantum-ring-2 {
+  width: 75%;
+  height: 75%;
+  top: 12.5%;
+  left: 12.5%;
+  border-color: #7c3aed;
+  animation-duration: 4s;
+  animation-direction: reverse;
+  filter: drop-shadow(0 0 10px #7c3aed);
+}
+
+.quantum-ring-3 {
+  width: 50%;
+  height: 50%;
+  top: 25%;
+  left: 25%;
+  border-color: #f59e0b;
+  animation-duration: 2s;
+  filter: drop-shadow(0 0 10px #f59e0b);
+}
+
+.data-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle, rgba(0, 245, 255, 0.3), transparent);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: coreGlow 2s ease-in-out infinite alternate;
+}
+
+.core-symbol {
+  font-size: 2rem;
+  color: #00f5ff;
+  animation: symbolPulse 1.5s ease-in-out infinite;
+}
+
+/* Scanning Effect */
+.scan-line {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #00f5ff, transparent);
+  animation: scanGlow 1s ease-in-out infinite;
+  filter: blur(1px);
+}
+
+/* Data Streams */
+.data-streams {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.data-stream {
+  position: absolute;
+  width: 2px;
+  height: 60px;
+  background: linear-gradient(to bottom, #00f5ff, transparent);
+  animation: dataFlow 2s linear infinite;
+}
+
+.data-stream:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; }
+.data-stream:nth-child(2) { top: 30%; right: 15%; animation-delay: 0.3s; }
+.data-stream:nth-child(3) { bottom: 20%; left: 30%; animation-delay: 0.6s; }
+.data-stream:nth-child(4) { bottom: 40%; right: 25%; animation-delay: 0.9s; }
+.data-stream:nth-child(5) { top: 15%; left: 60%; animation-delay: 1.2s; }
+.data-stream:nth-child(6) { top: 50%; right: 40%; animation-delay: 1.5s; }
+.data-stream:nth-child(7) { bottom: 10%; left: 70%; animation-delay: 1.8s; }
+.data-stream:nth-child(8) { bottom: 60%; right: 60%; animation-delay: 2.1s; }
+
+.data-packet {
+  width: 4px;
+  height: 4px;
+  background: #00f5ff;
+  border-radius: 50%;
+  animation: packetMove 2s linear infinite;
+  box-shadow: 0 0 5px #00f5ff;
+}
+
+/* Loading Text */
+.loading-text {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.message {
+  font-family: 'Orbitron', monospace;
+  font-size: 1.2rem;
+  color: #00f5ff;
+  margin-bottom: 10px;
+  text-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
+  animation: textGlow 2s ease-in-out infinite alternate;
+}
+
+.sub-message {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.9rem;
+  color: #7c3aed;
+  margin-bottom: 20px;
+  opacity: 0.8;
+}
+
+.progress-indicators {
+  margin-top: 20px;
+}
+
+.progress-bar {
+  width: 200px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  margin: 0 auto 15px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00f5ff, #7c3aed, #f59e0b);
+  animation: progressMove 3s linear infinite;
+  filter: drop-shadow(0 0 5px #00f5ff);
+}
+
+.status-codes {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.status-code {
+  font-family: 'Orbitron', monospace;
+  font-size: 0.7rem;
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  animation: codeFlicker 3s linear infinite;
+}
+
+/* Holographic Grid */
+.holo-grid {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0.1;
+  z-index: -1;
+}
+
+.grid-line {
+  position: absolute;
+  background: #00f5ff;
+  animation: gridPulse 4s ease-in-out infinite;
+}
+
+.grid-line:nth-child(odd) {
+  width: 1px;
+  height: 100%;
+  left: calc(var(--line-index, 0) * 5%);
+  animation-delay: calc(var(--line-index, 0) * 0.1s);
+}
+
+.grid-line:nth-child(even) {
+  width: 100%;
+  height: 1px;
+  top: calc(var(--line-index, 0) * 5%);
+  animation-delay: calc(var(--line-index, 0) * 0.1s);
+}
+
+/* Animations */
+@keyframes quantumRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes coreGlow {
+  0% { box-shadow: 0 0 20px rgba(0, 245, 255, 0.3); }
+  100% { box-shadow: 0 0 40px rgba(0, 245, 255, 0.6); }
+}
+
+@keyframes symbolPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.8; }
+}
+
+@keyframes scanGlow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+@keyframes dataFlow {
+  0% { opacity: 0; transform: translateY(-20px); }
+  50% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(20px); }
+}
+
+@keyframes packetMove {
+  0% { transform: translateY(0px); opacity: 1; }
+  100% { transform: translateY(-60px); opacity: 0; }
+}
+
+@keyframes textGlow {
+  0% { text-shadow: 0 0 10px rgba(0, 245, 255, 0.3); }
+  100% { text-shadow: 0 0 20px rgba(0, 245, 255, 0.8); }
+}
+
+@keyframes progressMove {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200px); }
+}
+
+@keyframes codeFlicker {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+@keyframes gridPulse {
+  0%, 100% { opacity: 0.05; }
+  50% { opacity: 0.15; }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .loader-container {
+    width: 300px;
+    height: 300px;
+  }
+  
+  .hologram-core {
+    width: 150px;
+    height: 150px;
+  }
+  
+  .message {
+    font-size: 1rem;
+  }
+  
+  .progress-bar {
+    width: 150px;
+  }
+  
+  .status-codes {
+    gap: 10px;
+  }
+  
+  .status-code {
+    font-size: 0.6rem;
+    padding: 3px 6px;
+  }
+}

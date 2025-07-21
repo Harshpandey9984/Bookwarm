@@ -1,0 +1,428 @@
+/* Quantum Notifications Styles */
+.quantum-notifications-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  pointer-events: none;
+}
+
+.quantum-notification {
+  position: relative;
+  width: 350px;
+  background: rgba(10, 10, 15, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 15px;
+  overflow: hidden;
+  pointer-events: all;
+  animation: notificationSlideIn 0.5s ease-out;
+  animation-delay: calc(var(--notification-index, 0) * 0.1s);
+  animation-fill-mode: both;
+}
+
+.quantum-notification::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 2px;
+  background: linear-gradient(45deg, #00f5ff, #7c3aed, #f59e0b);
+  border-radius: 15px;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: subtract;
+  z-index: -1;
+  animation: borderFlow 3s linear infinite;
+}
+
+.notification-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 15px;
+  background: linear-gradient(45deg, transparent, rgba(0, 245, 255, 0.3), transparent);
+  animation: borderScan 2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.notification-content {
+  padding: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.notification-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+.notification-icon {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.icon-core {
+  position: relative;
+  z-index: 2;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.icon-pulse {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  animation: iconPulse 2s ease-in-out infinite;
+}
+
+.notification-info {
+  flex: 1;
+}
+
+.notification-title {
+  font-family: 'Orbitron', monospace;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.notification-timestamp {
+  font-size: 0.75rem;
+  opacity: 0.7;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.dismiss-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.8rem;
+}
+
+.dismiss-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  transform: scale(1.1);
+}
+
+.notification-message {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 15px;
+}
+
+.notification-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.action-btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: 1px solid;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.action-btn.primary {
+  background: linear-gradient(135deg, #00f5ff, #7c3aed);
+  border-color: #00f5ff;
+  color: #ffffff;
+}
+
+.action-btn.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 245, 255, 0.4);
+}
+
+.notification-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+}
+
+.progress-line {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #00f5ff, #7c3aed, #f59e0b);
+  animation: progressFlow 5s linear;
+  transform: translateX(-100%);
+}
+
+/* Quantum Particles */
+.quantum-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: #00f5ff;
+  border-radius: 50%;
+  opacity: 0.6;
+}
+
+.particle-1 {
+  top: 20%;
+  left: 10%;
+  animation: particleFloat1 4s ease-in-out infinite;
+}
+
+.particle-2 {
+  top: 60%;
+  left: 80%;
+  animation: particleFloat2 5s ease-in-out infinite;
+}
+
+.particle-3 {
+  top: 30%;
+  right: 20%;
+  animation: particleFloat3 3s ease-in-out infinite;
+}
+
+.particle-4 {
+  bottom: 30%;
+  left: 30%;
+  animation: particleFloat1 4.5s ease-in-out infinite;
+}
+
+.particle-5 {
+  bottom: 60%;
+  right: 40%;
+  animation: particleFloat2 3.5s ease-in-out infinite;
+}
+
+.particle-6 {
+  top: 80%;
+  left: 60%;
+  animation: particleFloat3 4.2s ease-in-out infinite;
+}
+
+/* Notification Type Specific Styles */
+.quantum-notification.success {
+  --primary-color: #10b981;
+  --secondary-color: #34d399;
+}
+
+.quantum-notification.success .icon-core {
+  color: #10b981;
+}
+
+.quantum-notification.success .notification-title {
+  color: #10b981;
+}
+
+.quantum-notification.success .icon-pulse {
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.3), transparent);
+}
+
+.quantum-notification.error {
+  --primary-color: #ef4444;
+  --secondary-color: #f87171;
+}
+
+.quantum-notification.error .icon-core {
+  color: #ef4444;
+}
+
+.quantum-notification.error .notification-title {
+  color: #ef4444;
+}
+
+.quantum-notification.error .icon-pulse {
+  background: radial-gradient(circle, rgba(239, 68, 68, 0.3), transparent);
+}
+
+.quantum-notification.info {
+  --primary-color: #3b82f6;
+  --secondary-color: #60a5fa;
+}
+
+.quantum-notification.info .icon-core {
+  color: #3b82f6;
+}
+
+.quantum-notification.info .notification-title {
+  color: #3b82f6;
+}
+
+.quantum-notification.info .icon-pulse {
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.3), transparent);
+}
+
+.quantum-notification.warning {
+  --primary-color: #f59e0b;
+  --secondary-color: #fbbf24;
+}
+
+.quantum-notification.warning .icon-core {
+  color: #f59e0b;
+}
+
+.quantum-notification.warning .notification-title {
+  color: #f59e0b;
+}
+
+.quantum-notification.warning .icon-pulse {
+  background: radial-gradient(circle, rgba(245, 158, 11, 0.3), transparent);
+}
+
+.quantum-notification.blockchain {
+  --primary-color: #00f5ff;
+  --secondary-color: #7c3aed;
+}
+
+.quantum-notification.blockchain .icon-core {
+  color: #00f5ff;
+}
+
+.quantum-notification.blockchain .notification-title {
+  color: #00f5ff;
+}
+
+.quantum-notification.blockchain .icon-pulse {
+  background: radial-gradient(circle, rgba(0, 245, 255, 0.3), transparent);
+}
+
+.quantum-notification.ai {
+  --primary-color: #7c3aed;
+  --secondary-color: #a855f7;
+}
+
+.quantum-notification.ai .icon-core {
+  color: #7c3aed;
+}
+
+.quantum-notification.ai .notification-title {
+  color: #7c3aed;
+}
+
+.quantum-notification.ai .icon-pulse {
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.3), transparent);
+}
+
+/* Animations */
+@keyframes notificationSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes borderFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes borderScan {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes iconPulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+
+@keyframes progressFlow {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(0%); }
+}
+
+@keyframes particleFloat1 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.6; }
+  50% { transform: translate(10px, -10px) scale(1.5); opacity: 1; }
+}
+
+@keyframes particleFloat2 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+  50% { transform: translate(-15px, 15px) scale(1.2); opacity: 0.8; }
+}
+
+@keyframes particleFloat3 {
+  0%, 100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+  50% { transform: translate(8px, 12px) scale(1.3); opacity: 0.9; }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .quantum-notifications-container {
+    left: 20px;
+    right: 20px;
+    top: 80px;
+  }
+  
+  .quantum-notification {
+    width: 100%;
+    max-width: calc(100vw - 40px);
+  }
+  
+  .notification-content {
+    padding: 15px;
+  }
+  
+  .notification-header {
+    gap: 10px;
+  }
+  
+  .notification-icon {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .icon-core {
+    font-size: 1rem;
+  }
+  
+  .notification-title {
+    font-size: 0.9rem;
+  }
+  
+  .notification-message {
+    font-size: 0.8rem;
+  }
+}
